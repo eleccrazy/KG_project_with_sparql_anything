@@ -1,0 +1,1 @@
+Project for the Knowledge Graphs course to query information about museum objects, artists, and artworks using SPARQL Anything.

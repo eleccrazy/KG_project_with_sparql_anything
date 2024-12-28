@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum Object Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Museum Object Search</h1>
+        <form method="post" action="/">
+            <!-- Museum Object Name -->
+            <label for="object-name">Museum Object Name:</label>
+            <input type="text" id="object-name" name="object_name" placeholder="Enter museum object name...">
+            
+            <!-- Submit Button -->
+            <input type="submit" value="Search">
+        </form>
+        
+        <!-- Results Section -->
+        <div class="results">
+            <h2>Results:</h2>
+            {% if results %}
+            <p>{{results}}</p>
+            {% else %}
+                <p>No results yet. Please submit a query.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

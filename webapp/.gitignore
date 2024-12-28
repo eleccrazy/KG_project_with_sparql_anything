@@ -1,0 +1,7 @@
+# Exclude kg_web environment variable files (assuming they are named as such)
+kg-web/
+
+# Exclude Python bytecode cache files
+__pycache__/
+*.pyc
+*.pyo
