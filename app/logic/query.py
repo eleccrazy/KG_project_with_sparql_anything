@@ -46,33 +46,36 @@ def query_artist_by_name(keyword: str) -> Union[List[Dict[str, str]], Dict[str, 
         }}
     }}
     """
+    try:
+     # Send the POST request to the SPARQL-Anything server
+        response = requests.post(
+            sparql_endpoint,
+            data={"query": sparql_query, "format": "json"}
+        )
 
-    # Send the POST request to the SPARQL-Anything server
-    response = requests.post(
-        sparql_endpoint,
-        data={"query": sparql_query, "format": "json"}
-    )
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        data = response.json()  # Get the results as a JSON object
-        results = data.get("results", {}).get("bindings", [])
+        # Check if the request was successful
+        if response.status_code == 200:
+            data = response.json()  # Get the results as a JSON object
+            results = data.get("results", {}).get("bindings", [])
         
-        # Format the results into a more readable structure
-        formatted_results = []
-        if results:
-            for item in results:
-                artist_info = {
-                    "name": item.get("name", {}).get("value", "Unknown"),
-                    "artist_bio": item.get("ArtistBio", {}).get("value", "No bio available"),
-                    "begin_date": item.get("BeginDate", {}).get("value", "Unknown"),
-                    "end_date": item.get("EndDate", {}).get("value", "Unknown"),
-                    "nationality": item.get("Nationality", {}).get("value", "Unknown"),
-                    "wiki_qid": item.get("wikiQID", {}).get("value", "Not available")
-                }
-                formatted_results.append(artist_info)
+            # Format the results into a more readable structure
+            formatted_results = []
+            if results:
+                for item in results:
+                    artist_info = {
+                        "name": item.get("name", {}).get("value", "Unknown"),
+                        "artist_bio": item.get("ArtistBio", {}).get("value", "No bio available"),
+                        "begin_date": item.get("BeginDate", {}).get("value", "Unknown"),
+                        "end_date": item.get("EndDate", {}).get("value", "Unknown"),
+                        "nationality": item.get("Nationality", {}).get("value", "Unknown"),
+                        "wiki_qid": item.get("wikiQID", {}).get("value", "Not available")
+                    }
+                    formatted_results.append(artist_info)
+            else:
+                return {"message": "No matching artists found."}
+            return formatted_results
         else:
-            return {"message": "No matching artists found."}
-        return formatted_results
-    else:
-        return {"error": f"Error: {response.status_code}, {response.text}"}
+            return {"error": f"Error: {response.status_code}, {response.text}"}
+        
+    except:
+        return {"error": "Sparql Anything server is not runinning"}

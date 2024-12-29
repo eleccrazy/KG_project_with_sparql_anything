@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-import requests  # Assuming you're using this to make HTTP requests for your SPARQL query, etc.
+import requests # Import the requests library to send and receive HTTP requests
 from app.logic.query import query_artist_by_name
 
 app = Flask(__name__)
@@ -17,9 +17,9 @@ def home():
     if request.method == 'POST':
         # Get the user input from the form
         object_name = request.form.get('artist_name')
-        # Here we can run the sparql anything query based on the object_name
         results = query_artist_by_name(object_name)
-        
+        if type(results) == dict:
+            return render_template('error.html', message=results.get('error'))
     return render_template('index.html', results=results)
 
 @app.route("/artist_details", methods=["GET", "POST"])
@@ -31,8 +31,6 @@ def artist_details():
     """
     wiki_qid = request.args.get("wiki_qid")  # Get the Wiki QID from the URL parameters
     artist_details = None
-    print(wiki_qid)
-
     if wiki_qid:
         # Placeholder artist details for demonstration purposes
         artist_details = {
