@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 import requests # Import the requests library to send and receive HTTP requests
-from app.logic.query import query_artist_by_name
+from app.logic.query import query_artist_by_name, query_artworks_by_artist_name
 
 app = Flask(__name__)
 
