@@ -1,63 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Artist Details</title>
     <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
-        .card-img-top {
-            height: 200px; /* Fixed height */
-            width: 100%; /* Full width */
-            object-fit: contain; /* Ensure the entire image fits within the space */
-            background-color: #f0f0f0; /* Optional background color */
-        }
+      .card-img-top {
+        height: 200px; /* Fixed height */
+        width: 100%; /* Full width */
+        object-fit: contain; /* Ensure the entire image fits within the space */
+        background-color: #f0f0f0; /* Optional background color */
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container mt-5">
-        <!-- Artist Details -->
-        <h1 class="text-center mb-4">{{ artist.get('name', 'Unknown') }}</h1>
-        {% if artist %}
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">{{ artist.get('name', 'Unknown') }}</h5>
-                <p class="card-text"><strong>Description:</strong> {{ artist.get('bio', 'No description available') }}</p>
-                <p class="card-text"><strong>Nationality:</strong> {{ artist.get('nationality', 'Unknown') }}</p>
-            </div>
-        </div>
-        {% else %}
-        <p class="text-muted">No details found for this artist.</p>
-        {% endif %}
+      <!-- Artist Details -->
+      <h1 class="text-center mb-4">{{ artist_name }}</h1>
 
-        <!-- Artworks Section -->
-        <h2 class="text-center mt-5 mb-4">{{total_artworks}} Artworks found.</h2>
-        {% if artworks %}
-        <div class="row">
-            {% for artwork in artworks %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <img src="{{ artwork.get('ImageURL', '/static/no-image.png') }}" class="card-img-top" alt="Artwork Image">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ artwork.get('Title', 'Untitled') }}</h5>
-                        <p class="card-text"><strong>Medium:</strong> {{ artwork.get('Medium', 'Unknown') }}</p>
-                        <p class="card-text"><strong>Dimensions:</strong> {{ artwork.get('Dimensions', 'Unknown') }}</p>
-                        <p class="card-text"><strong>Date:</strong> {{ artwork.get('Date', 'Unknown') }}</p>
-                    </div>
-                    <div class="card-footer text-center">
-                        <a href="{{ artwork.get('URL', '#') }}" target="_blank" class="btn btn-primary">View Artwork</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+      {% if artist %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <p class="card-text">
+            <strong>Given Name:</strong> {{ artist.get('givenName', 'Unknown')
+            }}
+          </p>
+          <p class="card-text">
+            <strong>Family Name:</strong> {{ artist.get('familyName', 'Unknown')
+            }}
+          </p>
+          <p class="card-text">
+            <strong>Gender:</strong> {{ artist.get('gender', 'Unknown') }}
+          </p>
+          <p class="card-text">
+            <strong>Nationality:</strong> {{ artist.get('nationality',
+            'Unknown') }}
+          </p>
+          <p class="card-text">
+            <strong>Place of Birth:</strong> {{ artist.get('placeOfBirth',
+            'Unknown') }}
+          </p>
+          <p class="card-text">
+            <strong>Work Period Start:</strong> {{ artist.get('workPeriodStart',
+            'Unknown') }}
+          </p>
+          <p class="card-text">
+            <strong>Work Period End:</strong> {{ artist.get('workPeriodEnd',
+            'Unknown') }}
+          </p>
+          <p class="card-text">
+            <strong>Occupations:</strong> {{ artist.get('occupations',
+            'Unknown') }}
+          </p>
+          <p class="card-text">
+            <strong>Works in Collection:</strong> {{
+            artist.get('worksInCollection', 'Unknown') }}
+          </p>
+          <p class="card-text">
+            <strong>Awards:</strong> {{ artist.get('awards', 'Unknown') }}
+          </p>
+          <p class="text-center">
+            <a
+              href="https://www.wikidata.org/wiki/{{ artist.get('wiki_qid') }}"
+              target="_blank"
+              class="btn btn-primary"
+              >View More on Wikidata</a
+            >
+          </p>
         </div>
-        {% else %}
-        <p class="text-muted text-center">No artworks found for this artist.</p>
-        {% endif %}
+      </div>
+      {% else %}
+      <p class="text-muted">
+        No details found for this artist from Wikidata as the wiki QID is not
+        available in the Artists.json dataset.
+      </p>
+      {% endif %}
+
+      <!-- Artworks Section -->
+      <h4 class="text-center mt-5 mb-4">
+        {{ total_artworks }} Artworks found for this artist from the
+        Artworks.json dataset.
+      </h4>
+      {% if artworks %}
+      <div class="row">
+        {% for artwork in artworks %}
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img
+              src="{{ artwork.get('ImageURL', '/static/no-image.png') }}"
+              class="card-img-top"
+              alt="Artwork Image"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ artwork.get('Title', 'Untitled') }}</h5>
+              <p class="card-text">
+                <strong>Medium:</strong> {{ artwork.get('Medium', 'Unknown') }}
+              </p>
+              <p class="card-text">
+                <strong>Dimensions:</strong> {{ artwork.get('Dimensions',
+                'Unknown') }}
+              </p>
+              <p class="card-text">
+                <strong>Date:</strong> {{ artwork.get('Date', 'Unknown') }}
+              </p>
+            </div>
+            <div class="card-footer text-center">
+              <a
+                href="{{ artwork.get('URL', '#') }}"
+                target="_blank"
+                class="btn btn-primary"
+                >View Artwork</a
+              >
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="text-muted text-center">No artworks found for this artist.</p>
+      {% endif %}
     </div>
 
     <!-- Bootstrap JS (optional, for interactivity like buttons, modals) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>

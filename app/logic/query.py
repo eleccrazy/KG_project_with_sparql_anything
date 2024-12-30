@@ -71,7 +71,7 @@ def query_artist_by_name(keyword: str) -> Union[List[Dict[str, str]], Dict[str, 
                         "begin_date": item.get("BeginDate", {}).get("value", "Unknown"),
                         "end_date": item.get("EndDate", {}).get("value", "Unknown"),
                         "nationality": item.get("Nationality", {}).get("value", "Unknown"),
-                        "wiki_qid": item.get("wikiQID", {}).get("value", "Not available")
+                        "wiki_qid": item.get("wikiQID", {}).get("value", "None")
                     }
                     formatted_results.append(artist_info)
             else:
