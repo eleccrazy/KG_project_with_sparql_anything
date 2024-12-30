@@ -45,7 +45,7 @@
                                 <div class="card-footer text-center">
                                     <form method="POST" action="/query_wikidata">
                                         <input type="hidden" name="wiki_qid" value="{{ artist.wiki_qid }}">
-                                        <a href="{{ url_for('artist_details', wiki_qid=artist.wiki_qid) }}" class="btn btn-info w-100">Query More about {{ artist.name }}</a>
+                                        <a href="{{ url_for('artist_details', wiki_qid=artist.wiki_qid, artist_name=artist.name) }}" class="btn btn-info w-100">Query More about {{ artist.name }}</a>
                                     </form>
                                 </div>
                             </div>
