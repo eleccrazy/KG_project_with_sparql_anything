@@ -13,43 +13,6 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles.css') }}"
     />
-    <!-- Additional CSS for the spinner and backdrop -->
-    <style>
-      /* Spinner container */
-      .spinner-container {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 9999;
-      }
-
-      .spinner-border {
-        width: 3rem;
-        height: 3rem;
-        border-width: 0.3em;
-      }
-
-      /* Backdrop overlay for blurring content */
-      .backdrop {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(49, 36, 36, 0.568); /* Semi-transparent background */
-        z-index: 9998; /* Behind the spinner */
-        backdrop-filter: blur(0.5px); /* Apply blur effect */
-        pointer-events: none; /* Prevent interaction with the background */
-      }
-
-      /* Additional styles for the rest of the page */
-      .container {
-        position: relative;
-      }
-    </style>
   </head>
   <body>
     <div class="container mt-5">

@@ -103,17 +103,19 @@ def query_artworks_by_artist_name(keyword: str) -> Union[List[Dict[str, str]], D
     PREFIX fx: <http://sparql.xyz/facade-x/ns/>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-    SELECT ?title ?medium ?dimensions ?creditLine ?date ?url ?imageURL ?artistName
+    SELECT ?title ?medium ?dimensions ?date ?url ?imageURL ?artistName ?dateAquired ?creditLine
     WHERE {{
         SERVICE <x-sparql-anything:location=file:///home/gizachew/main/msc/SecondSemester/KG/project/dataset/Artworks.json> {{
             ?artwork xyz:Title ?title ;
                      xyz:Artist ?artistNode ;
                      xyz:Medium ?medium ;
                      xyz:Dimensions ?dimensions ;
-                     xyz:CreditLine ?creditLine ;
                      xyz:Date ?date ;
                      xyz:URL ?url ;
                      xyz:ImageURL ?imageURL .
+                     
+                     OPTIONAL {{ ?artwork xyz:CreditLine ?creditLine }}
+                     OPTIONAL {{ ?artwork xyz:DateAcquired ?dateAquired }}
             
             # Extract the name of the artist from the blank node
             ?artistNode <http://www.w3.org/1999/02/22-rdf-syntax-ns#_1> ?artistName .
@@ -147,6 +149,7 @@ def query_artworks_by_artist_name(keyword: str) -> Union[List[Dict[str, str]], D
                         "Dimensions": item.get("dimensions", {}).get("value", "Unknown"),
                         "CreditLine": item.get("creditLine", {}).get("value", "Unknown"),
                         "Date": item.get("date", {}).get("value", "Unknown"),
+                        "DateAquired": item.get("dateAquired", {}).get("value", "Unknown"),
                         "URL": item.get("url", {}).get("value", "Unknown"),
                         "ImageURL": item.get("imageURL", {}).get("value", "Unknown"),
                         "Artist": item.get("artistName", {}).get("value", "Unknown"),
@@ -154,7 +157,6 @@ def query_artworks_by_artist_name(keyword: str) -> Union[List[Dict[str, str]], D
                     formatted_results.append(artwork_info)
             else:
                 return {"message": "No matching artworks found for the artist."}
-            
             return formatted_results
         else:
             return {"error": f"Error: {response.status_code}, {response.text}"}
