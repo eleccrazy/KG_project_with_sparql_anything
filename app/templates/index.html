@@ -1,64 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Artist Search</title>
     <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Artist Search</h1>
-        <form method="post" action="/" class="mb-4">
-            <!-- Artist Name Keyword -->
-            <div class="mb-3">
-                <label for="artist-name" class="form-label">Enter Artist Name Keyword:</label>
-                <input type="text" id="artist-name" name="artist_name" class="form-control" placeholder="Enter artist name (e.g., Robert)">
-            </div>
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary w-100">Search</button>
-        </form>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <!-- Additional CSS for the spinner and backdrop -->
+    <style>
+      /* Spinner container */
+      .spinner-container {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+      }
 
-        <!-- Results Section -->
-        <div class="results">
-            <h2>Results: 
-                {% if results %}
-                    <span class="badge bg-success">{{ results|length }}</span>
-                {% else %}
-                    <span class="badge bg-danger">0</span>
-                {% endif %}
-            </h2>
-            {% if results %}
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    {% for artist in results %}
-                        <div class="col">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ artist.name }}</h5>
-                                    <p class="card-text"><strong>Biography:</strong> {{ artist.artist_bio }}</p>
-                                    <p class="card-text"><strong>Birth Date:</strong> {{ artist.begin_date }}</p>
-                                    <p class="card-text"><strong>Death Date:</strong> {{ artist.end_date if artist.end_date != '0' else 'Unknown' }}</p>
-                                    <p class="card-text"><strong>Nationality:</strong> {{ artist.nationality }}</p>
-                                </div>
-                                <div class="card-footer text-center">
-                                    <form method="POST" action="/query_wikidata">
-                                        <input type="hidden" name="wiki_qid" value="{{ artist.wiki_qid }}">
-                                        <a href="{{ url_for('artist_details', wiki_qid=artist.wiki_qid, artist_name=artist.name) }}" class="btn btn-info w-100">Query More about {{ artist.name }}</a>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p class="text-muted">No results yet. Please submit a query.</p>
-            {% endif %}
+      .spinner-border {
+        width: 3rem;
+        height: 3rem;
+        border-width: 0.3em;
+      }
+
+      /* Backdrop overlay for blurring content */
+      .backdrop {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(49, 36, 36, 0.568); /* Semi-transparent background */
+        z-index: 9998; /* Behind the spinner */
+        backdrop-filter: blur(0.5px); /* Apply blur effect */
+        pointer-events: none; /* Prevent interaction with the background */
+      }
+
+      /* Additional styles for the rest of the page */
+      .container {
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4 text-dark">Artist Search</h1>
+      
+      <!-- Search Form -->
+      <form method="post" action="/" class="mb-4">
+        <div class="mb-3">
+          <label for="artist-name" class="form-label">Enter Artist Name Keyword:</label>
+          <input
+            type="text"
+            id="artist-name"
+            name="artist_name"
+            class="form-control"
+            placeholder="Enter artist name (e.g., Robert)"
+          />
         </div>
+        <!-- Updated Search Button with fixed width -->
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary btn-lg">Search</button>
+        </div>
+      </form>
+
+      <!-- Results Section -->
+      <div class="results">
+        <h2 class="mb-4">
+          Results: {% if results %}
+            <span class="badge bg-success">{{ results|length }}</span>
+          {% else %}
+            <span class="badge bg-danger">0</span>
+          {% endif %}
+        </h2>
+
+        {% if results %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for artist in results %}
+          <div class="col">
+            <div class="card shadow-sm h-100">
+              <div class="card-body">
+                <h5 class="card-title">{{ artist.name }}</h5>
+                <p class="card-text"><strong>Biography:</strong> {{ artist.artist_bio }}</p>
+                <p class="card-text"><strong>From:</strong> {{ artist.begin_date }} 
+                  {% if artist.end_date != '0' %} to {{ artist.end_date }} {% else %} (Life span unknown) {% endif %}
+                </p>
+                <p class="card-text"><strong>Nationality:</strong> {{ artist.nationality }}</p>
+              </div>
+              <div class="card-footer text-center">
+                <form method="POST" action="/query_wikidata">
+                  <input
+                    type="hidden"
+                    name="wiki_qid"
+                    value="{{ artist.wiki_qid }}"
+                  />
+                  <!-- Link to artist details with spinner trigger -->
+                  <a
+                    href="{{ url_for('artist_details', wiki_qid=artist.wiki_qid, artist_name=artist.name) }}"
+                    class="btn btn-secondary w-100 artist-details-btn"
+                    data-artist-name="{{ artist.name }}"
+                  >Learn More about {{ artist.name }}</a>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-muted text-center">No results yet. Please submit a query.</p>
+        {% endif %}
+      </div>
     </div>
+
+    <!-- Loading Spinner -->
+    <div class="spinner-container" id="spinner-container">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Backdrop for blur effect -->
+    <div class="backdrop" id="backdrop"></div>
 
     <!-- Bootstrap JS (optional, for interactivity like buttons, modals) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
+    <!-- Custom JavaScript to show/hide the spinner and backdrop -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Add event listener to all artist details buttons
+        const artistButtons = document.querySelectorAll('.artist-details-btn');
+        
+        artistButtons.forEach(button => {
+          button.addEventListener('click', function (event) {
+            // Show the loading spinner and backdrop when a button is clicked
+            document.getElementById('spinner-container').style.display = 'block';
+            document.getElementById('backdrop').style.display = 'block';
+
+            // Optionally, prevent form submission until loading is finished
+            // event.preventDefault();
+          });
+        });
+      });
+    </script>
+  </body>
 </html>
