@@ -5,3 +5,4 @@ kg-web/
 __pycache__/
 *.pyc
 *.pyo
+.env
