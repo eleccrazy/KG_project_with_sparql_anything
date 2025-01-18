@@ -1,9 +1,19 @@
 import requests
 from typing import List, Dict, Union
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from the .env file
+load_dotenv()
+
+# Fetch variables from .env
+SPARQL_ENDPOINT = os.getenv("SPARQL_ENDPOINT")
+ARTISTS_JSON_PATH = os.getenv("ARTISTS_JSON_PATH")
+ARTWORKS_JSON_PATH = os.getenv("ARTWORKS_JSON_PATH")
 
 
 # Define the SPARQL endpoint
-sparql_endpoint = "http://localhost:3000/sparql.anything"
+sparql_endpoint = SPARQL_ENDPOINT
 
 
 def query_artist_by_name(keyword: str) -> Union[List[Dict[str, str]], Dict[str, str]]:
@@ -21,6 +31,14 @@ def query_artist_by_name(keyword: str) -> Union[List[Dict[str, str]], Dict[str, 
             - A dictionary containing an error message if the query fails or no results are found.
     """
 
+    # Check if the SPARQL endpoint is provided
+    if not SPARQL_ENDPOINT:
+        return {"error": "SPARQL endpoint is not provided in the environment variables."}
+
+    # Check if the Artists JSON file path is provided
+    if not ARTISTS_JSON_PATH:
+        return {"error": "Artists JSON file path is not provided in the environment variables."}
+
     # Prepare the SPARQL query with the given keyword
     sparql_query = f"""
     PREFIX xyz: <http://sparql.xyz/facade-x/data/>
@@ -33,7 +51,7 @@ def query_artist_by_name(keyword: str) -> Union[List[Dict[str, str]], Dict[str, 
             # Subquery for artists based on DisplayName from the JSON dataset (Artists.json)
             SELECT ?source ?name ?ArtistBio ?BeginDate ?EndDate ?Nationality ?wikiQID
             WHERE {{
-                SERVICE <x-sparql-anything:location=file:///home/gizachew/main/msc/SecondSemester/KG/project/dataset/Artists.json> {{
+                SERVICE <x-sparql-anything:location={ARTISTS_JSON_PATH}> {{
                     ?artist xyz:DisplayName ?name ;
                             xyz:ArtistBio ?ArtistBio ;
                             xyz:BeginDate ?BeginDate ;
@@ -96,6 +114,14 @@ def query_artworks_by_artist_name(keyword: str) -> Union[List[Dict[str, str]], D
             - A list of dictionaries with artwork details (title, medium, dimensions, credit line, date, url, image URL, artist name)
             - A dictionary containing an error message if the query fails or no results are found.
     """
+    
+    # Check if the SPARQL endpoint is provided
+    if not SPARQL_ENDPOINT:
+        return {"error": "SPARQL endpoint is not provided in the environment variables."}
+
+    # Check if the Artworks JSON file path is provided
+    if not ARTWORKS_JSON_PATH:
+        return {"error": "Artworks JSON file path is not provided in the environment variables."}
 
     # Prepare the SPARQL query with the given keyword
     sparql_query = f"""
@@ -105,7 +131,7 @@ def query_artworks_by_artist_name(keyword: str) -> Union[List[Dict[str, str]], D
 
     SELECT ?title ?medium ?dimensions ?date ?url ?imageURL ?artistName ?dateAquired ?creditLine
     WHERE {{
-        SERVICE <x-sparql-anything:location=file:///home/gizachew/main/msc/SecondSemester/KG/project/dataset/Artworks.json> {{
+        SERVICE <x-sparql-anything:location={ARTWORKS_JSON_PATH}> {{
             ?artwork xyz:Title ?title ;
                      xyz:Artist ?artistNode ;
                      xyz:Medium ?medium ;

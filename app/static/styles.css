@@ -1,142 +1,142 @@
 /* styles.css */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa; /* Light background color */
-    color: #495057; /* Darker text for better readability */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa; /* Light background color */
+  color: #495057; /* Darker text for better readability */
 }
 
 .container {
-    max-width: 1200px;
-    margin: auto;
+  max-width: 1200px;
+  margin: auto;
 }
 
 h1 {
-    color: #212529; /* Darker shade for headings */
-    font-weight: 700;
-    text-transform: uppercase;
+  color: #212529; /* Darker shade for headings */
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .card {
-    border-radius: 8px; /* Rounded corners */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
-    background-color: #ffffff; /* Clean white background for cards */
+  border-radius: 8px; /* Rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+  background-color: #ffffff; /* Clean white background for cards */
 }
 
 .card:hover {
-    transform: translateY(-8px); /* Smooth hover effect */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+  transform: translateY(-8px); /* Smooth hover effect */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
 }
 
 .card-body {
-    padding: 20px;
+  padding: 20px;
 }
 
 .card-title {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #2c3e50; /* Slightly softer dark color */
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2c3e50; /* Slightly softer dark color */
 }
 
 .card-text {
-    font-size: 1rem;
-    margin-bottom: 10px;
+  font-size: 1rem;
+  margin-bottom: 10px;
 }
 
 .card-footer {
-    background-color: #f1f1f1; /* Subtle footer color */
-    border-top: 1px solid #e0e0e0;
-    padding: 15px;
+  background-color: #f1f1f1; /* Subtle footer color */
+  border-top: 1px solid #e0e0e0;
+  padding: 15px;
 }
 
 .btn {
-    font-size: 1rem;
-    padding: 12px;
-    text-transform: capitalize;
+  font-size: 1rem;
+  padding: 12px;
+  text-transform: capitalize;
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+  background-color: #007bff;
+  border-color: #007bff;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
+  background-color: #0056b3;
+  border-color: #004085;
 }
 
 .btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
+  background-color: #6c757d;
+  border-color: #6c757d;
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268;
-    border-color: #4e555b;
+  background-color: #5a6268;
+  border-color: #4e555b;
 }
 
 .form-label {
-    font-weight: bold;
-    color: #212529;
+  font-weight: bold;
+  color: #212529;
 }
 
 .mb-4 {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .results h2 {
-    font-size: 1.6rem;
-    color: #212529;
+  font-size: 1.6rem;
+  color: #212529;
 }
 
 .badge {
-    font-size: 1.2rem;
-    padding: 0.6rem 1.2rem;
+  font-size: 1.2rem;
+  padding: 0.6rem 1.2rem;
 }
 
 .text-muted {
-    color: #6c757d;
+  color: #6c757d;
 }
 
 /* Adjust the search button to have a fixed width */
 .d-flex .btn {
-    width: auto; /* Remove full-width */
-    margin: 0 auto; /* Center the button */
-    padding: 12px 30px; /* More padding on the sides for better appearance */
-    font-size: 1.1rem; /* Slightly larger font size for visibility */
+  width: auto; /* Remove full-width */
+  margin: 0 auto; /* Center the button */
+  padding: 12px 30px; /* More padding on the sides for better appearance */
+  font-size: 1.1rem; /* Slightly larger font size for visibility */
 }
 
 /* Spinner container */
-      .spinner-container {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 9999;
-      }
+.spinner-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
 
-      .spinner-border {
-        width: 3rem;
-        height: 3rem;
-        border-width: 0.3em;
-      }
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3em;
+}
 
-      /* Backdrop overlay for blurring content */
-      .backdrop {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(49, 36, 36, 0.568); /* Semi-transparent background */
-        z-index: 9998; /* Behind the spinner */
-        backdrop-filter: blur(0.5px); /* Apply blur effect */
-        pointer-events: none; /* Prevent interaction with the background */
-      }
+/* Backdrop overlay for blurring content */
+.backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(49, 36, 36, 0.568); /* Semi-transparent background */
+  z-index: 9998; /* Behind the spinner */
+  backdrop-filter: blur(0.5px); /* Apply blur effect */
+  pointer-events: none; /* Prevent interaction with the background */
+}
 
-      /* Additional styles for the rest of the page */
-      .container {
-        position: relative;
-      }
+/* Additional styles for the rest of the page */
+.container {
+  position: relative;
+}
