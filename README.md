@@ -27,8 +27,8 @@ This project utilizes three datasets:
 ## Installation
 1. **Clone the repository:**
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/eleccrazy/KG_project_with_sparql_anything.git
+   cd KG_project_with_sparql_anything
 
 ## 2. Install Dependencies
 
@@ -62,7 +62,7 @@ ARTWORKS_JSON_PATH=path/to/Artworks.json
 ## 5. Run the Application
 
 ```bash
-python app/app.py
+python3 -m app.app
 ```
 
 ## 6. Access the Application
@@ -95,9 +95,9 @@ http://127.0.0.1:5000
 
 - **Python**: Backend logic and server handling  
 - **Flask**: Web framework for routing and handling requests  
-- **SPARQL Anything**: For querying JSON data using SPARQL  
+- **SPARQL Anything**: For querying JSON data using SPARQL 
 - **Wikidata SPARQL Endpoint**: For fetching external artist data  
-- **HTML/CSS**: Frontend design and styling  
+- **HTML/CSS/Bootstrap**: Frontend design and styling  
 - **python-dotenv**: Loading environment variables from `.env`  
 
 ## Contributing
