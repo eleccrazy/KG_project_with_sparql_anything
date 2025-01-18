@@ -85,6 +85,19 @@ http://127.0.0.1:5000
 - **Extended Information:**
   - If a Wikidata QID is found, additional information about the artist is fetched from Wikidata using the `wiki_data_query.py` script.
 
+
+## 📸 Screenshots
+
+### 1. Artist Search Page
+![Artist Search](images/first.png)
+
+### 2. Artist Details Page
+![Artist Details](images/second.png)
+
+### 3. Artwork Display
+![Artworks](images/third.png)
+![Artworks](images/fourth.png)
+
 ## Data Sources
 
 - [DBpedia](https://dbpedia.org/page/DBpedia) for linked data concepts.
