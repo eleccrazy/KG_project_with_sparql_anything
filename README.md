@@ -1,7 +1,7 @@
-# Artist Explorer Web Application
+#  SPARQL Anything Artist Explorer
 
 ## Overview
-The **Artist Explorer Web Application** is a dynamic platform that allows users to search for artists, access detailed information about them, and explore their artworks. This project harnesses the power of **SPARQL Anything**, a versatile tool that allows SPARQL queries over heterogeneous data sources like JSON, CSV, XML, and more. By using SPARQL Anything, the application seamlessly integrates data from local JSON files and external semantic data from Wikidata, delivering a comprehensive and enriched user experience.
+The **SPARQL Anything Artist Explorer** is a dynamic platform that allows users to search for artists, access detailed information about them, and explore their artworks. This project harnesses the power of **SPARQL Anything**, a versatile tool that allows **SPARQL** queries over heterogeneous data sources like JSON, CSV, XML, and more. By using **SPARQL Anything**, the application seamlessly integrates data from local JSON files and external semantic data from Wikidata, delivering a comprehensive and enriched user experience.
 
 ### **Datasets Used**
 This project utilizes three datasets:
