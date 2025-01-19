@@ -84,7 +84,10 @@ http://127.0.0.1:5000
 
 - **Extended Information:**
   - If a Wikidata QID is found, additional information about the artist is fetched from Wikidata using the `wiki_data_query.py` script.
+## 🌐 Live Demo
 
+Try out the deployed application here:  
+🔗 [Live Application](https://sparqlart.gizachewkassa.tech/)
 
 ## 📸 Screenshots
 
