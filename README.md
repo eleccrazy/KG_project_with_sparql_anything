@@ -72,6 +72,10 @@ Open your browser and visit:
 ```
 http://127.0.0.1:5000
 ```
+### Note:
+From the **Artists.json** file, please replace the original key name **Wiki QID** with **wikiQID** for proper data retrieval by the SPARQL Anything server.
+
+You can use Python to automate the string replacement in the JSON file.
 
 ## Data Fetching Process
 
