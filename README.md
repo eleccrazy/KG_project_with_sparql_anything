@@ -107,7 +107,7 @@ Try out the deployed application here:
 
 ## Data Sources
 
-- [DBpedia](https://dbpedia.org/page/DBpedia) for linked data concepts.
+- [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page) A collaborative platform for structured, linked data.
 - [MoMA Artists Dataset](https://github.com/MuseumofModernArt/collection/blob/main/Artists.json)
 - [MoMA Artworks Dataset](https://github.com/MuseumofModernArt/collection/blob/main/Artworks.json)
 
